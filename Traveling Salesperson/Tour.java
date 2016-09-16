@@ -12,23 +12,39 @@ import java.awt.Graphics;
 public class Tour implements TourInterface
 {
     // instance variables
-    
+    int size;
+    ListNode log;
     
     // constructor
     public Tour()
     {
-        String doesThisWork = new String("YES IT SHOULD");
+        size = 0;
+        log = null;
     }
         
     //return the number of points (nodes) in the list   
     public int size()
     {
-        return -1;
+        return size;
     }
 
     // append Point p to the end of the list
     public void add(Point p)
     {
+        if(size == 0)
+        {
+            log = new ListNode(p);
+        }
+        else
+        {
+            ListNode currNode = log;
+            while(currNode.next != null)
+            {
+                currNode = currNode.next;
+            }
+            log.next = new ListNode(p);
+        }
+        size++;
     } 
     
     // print every node in the list 
