@@ -17,6 +17,7 @@ public class Tour implements TourInterface
     // constructor
     public Tour()
     {
+        String doesThisWork = new String("idk");
     }
         
     //return the number of points (nodes) in the list   
