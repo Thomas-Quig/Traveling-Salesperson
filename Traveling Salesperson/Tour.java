@@ -63,7 +63,25 @@ public class Tour implements TourInterface
     // draw the tour using the given graphics context
     public void draw(Graphics g)
     {
+        int x = (int)front.data.getX();
+        int y = (int)front.data.getY();
+        int firstX = x;
+        int firstY = y;
+        ListNode currNode = front;
         
+        while(currNode.next != null)
+        {
+            int oldX = x;
+            int oldY = y;
+            x = (int)currNode.next.data.getX();
+            y = (int)currNode.next.data.getY();
+            
+            g.fillOval(oldX-2,oldY-2,5,5);
+            g.drawLine(oldX, oldY, x, y);
+            currNode = currNode.next;
+        }
+        g.fillOval(x-2,y-2,5,5);
+        g.drawLine(x,y,firstX,firstY);
     }
 
     //calculate the distance of the Tour, but summing up the distance between adjacent points
