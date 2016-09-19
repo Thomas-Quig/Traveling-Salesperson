@@ -68,14 +68,14 @@ public class Tour implements TourInterface
         int firstX = x;
         int firstY = y;
         ListNode currNode = front;
-        
+
         while(currNode.next != null)
         {
             int oldX = x;
             int oldY = y;
             x = (int)currNode.next.data.getX();
             y = (int)currNode.next.data.getY();
-            
+
             g.fillOval(oldX-2,oldY-2,5,5);
             g.drawLine(oldX, oldY, x, y);
             currNode = currNode.next;
@@ -88,7 +88,14 @@ public class Tour implements TourInterface
     //NOTE p.distance(p2) gives the distance where p and p2 are of type Point
     public double distance()
     {
-        return -1;
+        ListNode currNode = front;
+        double d = back.data.distance(front.data);
+        while(currNode.next != back)
+        {
+            d += currNode.data.distance(currNode.next.data);
+            currNode = currNode.next;
+        }
+        return d + currNode.data.distance(currNode.next.data);
     }
 
     // add Point p to the list according to the NearestNeighbor heuristic
