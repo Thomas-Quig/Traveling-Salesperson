@@ -50,6 +50,12 @@ public class Tour implements TourInterface
     // print every node in the list 
     public void print()
     {   
+        ListNode currNode = log;
+        while(currNode.hasNext())
+        {
+            System.out.print(currNode.data);
+            currNode = currNode.next;
+        }
     }
     
     // draw the tour using the given graphics context
@@ -89,6 +95,11 @@ public class Tour implements TourInterface
         {
             this(p, null);
         }        
+        
+        public boolean hasNext()
+        {
+            return this.next == null;
+        }
     }
     
     
