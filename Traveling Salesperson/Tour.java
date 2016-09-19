@@ -13,15 +13,17 @@ public class Tour implements TourInterface
 {
     // instance variables
     int size;
-    ListNode log;
-    
+    ListNode front;
+    ListNode back;
+
     // constructor
     public Tour()
     {
         size = 0;
-        log = null;
+        front = null;
+        back = null;
     }
-        
+
     //return the number of points (nodes) in the list   
     public int size()
     {
@@ -31,38 +33,39 @@ public class Tour implements TourInterface
     // append Point p to the end of the list
     public void add(Point p)
     {
+        ListNode end = new ListNode(p);
         if(size == 0)
         {
-            log = new ListNode(p);
+            front = end;
         }
         else
         {
-            ListNode currNode = log;
-            while(currNode.next != null)
-            {
-                currNode = currNode.next;
-            }
-            log.next = new ListNode(p);
+            back.next = end;
+            back = back.next;
         }
+        back = end;
         size++;
     } 
-    
+
     // print every node in the list 
     public void print()
     {   
-        ListNode currNode = log;
-        while(currNode.hasNext())
+        ListNode currNode = front;
+        while(currNode.next != null)
         {
-            System.out.print(currNode.data);
+            System.out.println(currNode.data);
             currNode = currNode.next;
         }
+        System.out.println(currNode.data);
+        System.out.println("done");
     }
-    
+
     // draw the tour using the given graphics context
     public void draw(Graphics g)
     {
+        
     }
-    
+
     //calculate the distance of the Tour, but summing up the distance between adjacent points
     //NOTE p.distance(p2) gives the distance where p and p2 are of type Point
     public double distance()
@@ -74,12 +77,12 @@ public class Tour implements TourInterface
     public void insertNearest(Point p)
     {   
     }
-        
+
     // add Point p to the list according to the InsertSmallest heuristic
     public void insertSmallest(Point p)
     { 
     }
-    
+
     // This is a private inner class, which is a separate class within a class.
     private class ListNode
     {
@@ -90,19 +93,16 @@ public class Tour implements TourInterface
             this.data = p;
             this.next = n;
         }
-        
+
         public ListNode(Point p)
         {
             this(p, null);
         }        
-        
+
         public boolean hasNext()
         {
-            return this.next == null;
+            return this.next != null;
         }
     }
-    
-    
-  
 
 }
