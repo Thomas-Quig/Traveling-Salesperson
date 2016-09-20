@@ -23,8 +23,8 @@ public class TSPClientDriver
         // add points to the tour from the file.
         while(input.hasNext())
         {
-            tour.add(new Point(input.nextDouble(), input.nextDouble()));
-            //tour.insertNearest(new Point(input.nextDouble(), input.nextDouble()));
+            //tour.add(new Point(input.nextDouble(), input.nextDouble()));
+            tour.insertNearest(new Point(input.nextDouble(), input.nextDouble()));
             //tour.insertSmallest(new Point(input.nextDouble(), input.nextDouble()));
         }
         

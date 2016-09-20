@@ -101,6 +101,44 @@ public class Tour implements TourInterface
     // add Point p to the list according to the NearestNeighbor heuristic
     public void insertNearest(Point p)
     {   
+        int index = 0;
+        if(size == 0)
+        { 
+            add(p);
+        }
+        else
+        {
+            ListNode currNode = front;
+            int smallestDistance = (int)p.distance(front.data);
+            int j = 0;
+            while(currNode.next != null)
+            {
+                if(currNode.data.distance(p) < smallestDistance)
+                {
+                    index = j;
+                    smallestDistance = (int)currNode.data.distance(p);
+                }
+                currNode = currNode.next;
+                j++;
+                System.out.println(currNode.data);
+            }
+
+            currNode = front;
+            for(int i = 0; i < index; i++)
+            {
+                currNode = currNode.next;
+            }
+
+            if(index == size - 1)
+            {
+                back.next = new ListNode(p);
+                currNode.next = back;
+                back = back.next;
+            }
+            else
+                currNode.next = new ListNode(p,currNode.next);
+                size++;
+        }
     }
 
     // add Point p to the list according to the InsertSmallest heuristic
