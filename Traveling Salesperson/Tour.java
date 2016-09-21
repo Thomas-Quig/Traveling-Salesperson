@@ -102,7 +102,7 @@ public class Tour implements TourInterface
     public void insertNearest(Point p)
     {   
         int index = 0;
-        if(size == 0)
+        if(size <= 1)
         { 
             add(p);
         }
@@ -120,7 +120,6 @@ public class Tour implements TourInterface
                 }
                 currNode = currNode.next;
                 j++;
-                System.out.println(currNode.data);
             }
 
             currNode = front;
@@ -131,13 +130,15 @@ public class Tour implements TourInterface
 
             if(index == size - 1)
             {
-                back.next = new ListNode(p);
-                currNode.next = back;
-                back = back.next;
+                add(p);
             }
             else
-                currNode.next = new ListNode(p,currNode.next);
+            {
+                currNode.next = new ListNode(p,currNode.next.next);
+                if(index == size - 2)
+                    back = back.next;
                 size++;
+            }
         }
     }
 
@@ -160,12 +161,6 @@ public class Tour implements TourInterface
         public ListNode(Point p)
         {
             this(p, null);
-        }        
-
-        public boolean hasNext()
-        {
-            return this.next != null;
         }
     }
-
 }
