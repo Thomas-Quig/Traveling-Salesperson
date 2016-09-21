@@ -12,7 +12,7 @@ public class TSPClientDriver
         Tour tour = new Tour();
         
         //Open file for reading
-        Scanner input = new Scanner(new File("dataFiles","tsp5.txt"));
+        Scanner input = new Scanner(new File("dataFiles","tsp1000.txt"));
         
         int w = input.nextInt(); //first two lines are width/height maxes
         int h = input.nextInt(); //might want to use for Graphics scaling

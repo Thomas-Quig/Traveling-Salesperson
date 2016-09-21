@@ -54,8 +54,9 @@ public class Tour implements TourInterface
         {
             newNode.next = front;
             front = newNode;
+            size++;
         }
-        else
+        else if(index < size)
         {
             ListNode currNode = front;
             for(int i = 0; i < index - 1; i++)
@@ -64,8 +65,11 @@ public class Tour implements TourInterface
             }
             newNode.next = currNode.next;
             currNode.next = newNode;
+            size++;
         }
-        size++;
+        else
+            add(p);
+        
     } 
 
     // print every node in the list 
@@ -101,7 +105,7 @@ public class Tour implements TourInterface
             g.drawLine(oldX, oldY, x, y);
             g.drawString(String.format("" + i + " " + currNode.data), oldX + 10, oldY + 20);
             currNode = currNode.next;
-            
+
             i++;
         }
         g.fillOval(x-2,y-2,5,5);
@@ -127,7 +131,7 @@ public class Tour implements TourInterface
     public void insertNearest(Point p)
     {   
         int index = 0;
-        if(size <= 1)
+        if(size <= 2)
         { 
             add(p);
         }
@@ -151,7 +155,7 @@ public class Tour implements TourInterface
                 add(p);
             }
             else
-                insert(index,p);
+                insert(index + 1,p);
             /*
             currNode = front;
             for(int i = 0; i <= index; i++)
