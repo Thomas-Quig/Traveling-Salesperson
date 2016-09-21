@@ -47,6 +47,27 @@ public class Tour implements TourInterface
         size++;
     } 
 
+    private void insert(int index, Point p)
+    {
+        ListNode newNode = new ListNode(p);
+        if(index == 0)
+        {
+            newNode.next = front;
+            front = newNode;
+        }
+        else
+        {
+            ListNode currNode = front;
+            for(int i = 0; i < index - 1; i++)
+            {
+                currNode = currNode.next;
+            }
+            newNode.next = currNode.next;
+            currNode.next = newNode;
+        }
+        size++;
+    } 
+
     // print every node in the list 
     public void print()
     {   
@@ -68,7 +89,7 @@ public class Tour implements TourInterface
         int firstX = x;
         int firstY = y;
         ListNode currNode = front;
-
+        int i = 0;
         while(currNode.next != null)
         {
             int oldX = x;
@@ -79,6 +100,8 @@ public class Tour implements TourInterface
             g.fillOval(oldX-2,oldY-2,5,5);
             g.drawLine(oldX, oldY, x, y);
             currNode = currNode.next;
+            g.drawString(String.format("" + i), x + 10, y + 20);
+            i++;
         }
         g.fillOval(x-2,y-2,5,5);
         g.drawLine(x,y,firstX,firstY);
@@ -113,7 +136,7 @@ public class Tour implements TourInterface
             int j = 0;
             while(currNode.next != null)
             {
-                if(currNode.data.distance(p) < smallestDistance)
+                if((currNode.data.distance(p) < smallestDistance))
                 {
                     index = j;
                     smallestDistance = (int)currNode.data.distance(p);
@@ -121,24 +144,30 @@ public class Tour implements TourInterface
                 currNode = currNode.next;
                 j++;
             }
-
-            currNode = front;
-            for(int i = 0; i < index; i++)
-            {
-                currNode = currNode.next;
-            }
-
             if(index == size - 1)
             {
                 add(p);
             }
             else
+                insert(index,p);
+            /*
+            currNode = front;
+            for(int i = 0; i <= index; i++)
             {
-                currNode.next = new ListNode(p,currNode.next.next);
-                if(index == size - 2)
-                    back = back.next;
-                size++;
+            currNode = currNode.next;
             }
+
+            if(index == size - 1)
+            {
+            add(p);
+            }
+            else
+            {
+            currNode.next = new ListNode(p,currNode.next.next);
+            if(index == size - 1)
+            back = back.next;
+            size++;
+            }*/
         }
     }
 
