@@ -104,6 +104,7 @@ public class Tour implements TourInterface
             i++;
         }
         g.fillOval(x-2,y-2,5,5);
+        g.drawString(String.format("" + size), x + 10, y + 20);
         g.drawLine(x,y,firstX,firstY);
     }
 
