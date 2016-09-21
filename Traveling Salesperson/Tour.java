@@ -99,12 +99,13 @@ public class Tour implements TourInterface
 
             g.fillOval(oldX-2,oldY-2,5,5);
             g.drawLine(oldX, oldY, x, y);
+            g.drawString(String.format("" + i + " " + currNode.data), oldX + 10, oldY + 20);
             currNode = currNode.next;
-            g.drawString(String.format("" + i), x + 10, y + 20);
+            
             i++;
         }
         g.fillOval(x-2,y-2,5,5);
-        g.drawString(String.format("" + size), x + 10, y + 20);
+        g.drawString(String.format("" + (size - 1) + " " + back.data), x + 10, y + 20);
         g.drawLine(x,y,firstX,firstY);
     }
 
