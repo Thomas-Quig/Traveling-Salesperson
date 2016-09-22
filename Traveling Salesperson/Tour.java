@@ -49,27 +49,35 @@ public class Tour implements TourInterface
 
     private void insert(int index, Point p)
     {
-        ListNode newNode = new ListNode(p);
+        /*ListNode newNode = new ListNode(p);
         if(index == 0)
         {
-            newNode.next = front;
-            front = newNode;
-            size++;
+        newNode.next = front;
+        front = newNode;
+        size++;
         }
-        else if(index < size)
+        else if(index < size - 1)
         {
-            ListNode currNode = front;
-            for(int i = 0; i < index - 1; i++)
-            {
-                currNode = currNode.next;
-            }
-            newNode.next = currNode.next;
-            currNode.next = newNode;
-            size++;
+        ListNode currNode = front;
+        for(int i = 0; i < index - 1; i++)
+        {
+        currNode = currNode.next;
+        }
+        newNode.next = currNode.next;
+        currNode.next = newNode;
+        size++;
         }
         else
-            add(p);
-        
+        add(p);*/
+        ListNode currNode = front;
+        for(int i = 0; i < index; i++)
+        {
+            currNode = currNode.next;
+        }
+        ListNode newP = new ListNode(p, currNode.next);
+        currNode.next = newP;
+        size++;
+
     } 
 
     // print every node in the list 
@@ -109,7 +117,7 @@ public class Tour implements TourInterface
             i++;
         }
         g.fillOval(x-2,y-2,5,5);
-        g.drawString(String.format("" + (size - 1) + " " + back.data), x + 10, y + 20);
+        //g.drawString(String.format("" + (size - 1) + " " + back.data), x + 10, y + 20);
         g.drawLine(x,y,firstX,firstY);
     }
 
@@ -118,63 +126,66 @@ public class Tour implements TourInterface
     public double distance()
     {
         ListNode currNode = front;
-        double d = back.data.distance(front.data);
-        while(currNode.next != back)
+        double d = 0;
+        while(currNode.next != null)
         {
             d += currNode.data.distance(currNode.next.data);
             currNode = currNode.next;
         }
-        return d + currNode.data.distance(currNode.next.data);
+        d += front.data.distance(currNode.data);
+        return d;
     }
 
     // add Point p to the list according to the NearestNeighbor heuristic
     public void insertNearest(Point p)
     {   
         int index = 0;
-        if(size <= 2)
+        /*if(size == 0)
         { 
-            add(p);
+        add(p);
         }
         else
+        {*/
+        if(front == null)
         {
+            front = new ListNode(p);
+        }
+        
+        
             ListNode currNode = front;
-            int smallestDistance = (int)p.distance(front.data);
+            double smallestDistance = p.distance(front.data);
             int j = 0;
             while(currNode.next != null)
             {
                 if((currNode.data.distance(p) < smallestDistance))
                 {
                     index = j;
-                    smallestDistance = (int)currNode.data.distance(p);
+                    smallestDistance = currNode.data.distance(p);
                 }
                 currNode = currNode.next;
                 j++;
             }
-            if(index == size - 1)
-            {
-                add(p);
-            }
-            else
-                insert(index + 1,p);
-            /*
-            currNode = front;
-            for(int i = 0; i <= index; i++)
-            {
-            currNode = currNode.next;
-            }
-
-            if(index == size - 1)
-            {
-            add(p);
-            }
-            else
-            {
-            currNode.next = new ListNode(p,currNode.next.next);
-            if(index == size - 1)
-            back = back.next;
-            size++;
-            }*/
+            insert(index,p);
+        
+        /*
+        currNode = front;
+        for(int i = 0; i <= index; i++)
+        {
+        currNode = currNode.next;
         }
+
+        if(index == size - 1)
+        {
+        add(p);
+        }
+        else
+        {
+        currNode.next = new ListNode(p,currNode.next.next);
+        if(index == size - 1)
+        back = back.next;
+        size++;
+        }*/
+
     }
 
     // add Point p to the list according to the InsertSmallest heuristic
