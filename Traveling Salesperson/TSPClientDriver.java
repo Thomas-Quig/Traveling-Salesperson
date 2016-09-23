@@ -24,8 +24,8 @@ public class TSPClientDriver
         while(input.hasNext())
         {
             //tour.add(new Point(input.nextDouble(), input.nextDouble()));
-            tour.insertNearest(new Point(input.nextDouble(), input.nextDouble()));
-            //tour.insertSmallest(new Point(input.nextDouble(), input.nextDouble()));
+            //tour.insertNearest(new Point(input.nextDouble(), input.nextDouble()));
+            tour.insertSmallest(new Point(input.nextDouble(), input.nextDouble()));
         }
         
         // get stop time

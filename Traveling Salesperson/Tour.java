@@ -49,26 +49,6 @@ public class Tour implements TourInterface
 
     private void insert(int index, Point p)
     {
-        /*ListNode newNode = new ListNode(p);
-        if(index == 0)
-        {
-        newNode.next = front;
-        front = newNode;
-        size++;
-        }
-        else if(index < size - 1)
-        {
-        ListNode currNode = front;
-        for(int i = 0; i < index - 1; i++)
-        {
-        currNode = currNode.next;
-        }
-        newNode.next = currNode.next;
-        currNode.next = newNode;
-        size++;
-        }
-        else
-        add(p);*/
         ListNode currNode = front;
         for(int i = 0; i < index; i++)
         {
@@ -111,7 +91,7 @@ public class Tour implements TourInterface
 
             g.fillOval(oldX-2,oldY-2,5,5);
             g.drawLine(oldX, oldY, x, y);
-            g.drawString(String.format("" + i + " " + currNode.data), oldX + 10, oldY + 20);
+            //g.drawString(String.format("" + i + " " + currNode.data), oldX + 10, oldY + 20);
             currNode = currNode.next;
 
             i++;
@@ -140,57 +120,65 @@ public class Tour implements TourInterface
     public void insertNearest(Point p)
     {   
         int index = 0;
-        /*if(size == 0)
-        { 
-        add(p);
-        }
-        else
-        {*/
         if(front == null)
         {
             front = new ListNode(p);
         }
-        
-        
-            ListNode currNode = front;
-            double smallestDistance = p.distance(front.data);
-            int j = 0;
-            while(currNode.next != null)
+
+        ListNode currNode = front;
+        double smallestDistance = p.distance(front.data);
+        int j = 0;
+        while(currNode.next != null)
+        {
+            if((currNode.data.distance(p) < smallestDistance))
             {
-                if((currNode.data.distance(p) < smallestDistance))
-                {
-                    index = j;
-                    smallestDistance = currNode.data.distance(p);
-                }
-                currNode = currNode.next;
-                j++;
+                index = j;
+                smallestDistance = currNode.data.distance(p);
             }
-            insert(index,p);
-        
-        /*
-        currNode = front;
-        for(int i = 0; i <= index; i++)
-        {
-        currNode = currNode.next;
+            currNode = currNode.next;
+            j++;
         }
+        insert(index,p);
+    }
 
-        if(index == size - 1)
+    private void remove(int index)
+    {
+        ListNode currNode = front;
+        for(int i = 0; i < index - 1; i++)
         {
-        add(p);
+            currNode = currNode.next;
         }
-        else
-        {
-        currNode.next = new ListNode(p,currNode.next.next);
-        if(index == size - 1)
-        back = back.next;
-        size++;
-        }*/
-
+        currNode.next = currNode.next.next;
+        size--;
     }
 
     // add Point p to the list according to the InsertSmallest heuristic
     public void insertSmallest(Point p)
     { 
+
+        if(front == null)
+        {
+            front = new ListNode(p);
+            size++;
+        }
+        else
+        {
+            int index = 0;
+            ListNode currNode = front;
+            double smallestDistance = distance();
+            for(int i = 1; i < size - 1; i++)
+            { 
+                insert(i,p);
+                double potentialDistance = distance();
+                if(potentialDistance < smallestDistance)
+                {
+                    index = i;
+                }
+                remove(i);
+            }
+            insert(index,p);
+        }
+
     }
 
     // This is a private inner class, which is a separate class within a class.
