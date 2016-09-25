@@ -97,7 +97,6 @@ public class Tour implements TourInterface
             i++;
         }
         g.fillOval(x-2,y-2,5,5);
-        //g.drawString(String.format("" + (size - 1) + " " + back.data), x + 10, y + 20);
         g.drawLine(x,y,firstX,firstY);
     }
 
@@ -141,21 +140,10 @@ public class Tour implements TourInterface
         insert(index,p);
     }
 
-    private void remove(int index)
-    {
-        ListNode currNode = front;
-        for(int i = 0; i < index - 1; i++)
-        {
-            currNode = currNode.next;
-        }
-        currNode.next = currNode.next.next;
-        size--;
-    }
-
     // add Point p to the list according to the InsertSmallest heuristic
     public void insertSmallest(Point p)
     { 
-
+        int smallestIndex = 0;
         if(front == null)
         {
             front = new ListNode(p);
@@ -163,22 +151,26 @@ public class Tour implements TourInterface
         }
         else
         {
-            int index = 0;
             ListNode currNode = front;
-            double smallestDistance = distance();
-            for(int i = 1; i < size - 1; i++)
-            { 
-                insert(i,p);
-                double potentialDistance = distance();
-                if(potentialDistance < smallestDistance)
-                {
-                    index = i;
-                }
-                remove(i);
-            }
-            insert(index,p);
-        }
+            double smallestDistance = Double.POSITIVE_INFINITY;
+            int index = 0;
 
+            while(currNode.next != null)
+            {
+                double currDistance = currNode.data.distance(currNode.next.data);
+                double potentialDistance = currNode.data.distance(p) + currNode.next.data.distance(p);
+
+                if(potentialDistance - currDistance < smallestDistance)
+                {
+                    smallestIndex = index;
+                    smallestDistance = potentialDistance - currDistance;
+                }
+                currNode = currNode.next;
+                index++;
+            }
+
+        }
+        insert(smallestIndex,p);
     }
 
     // This is a private inner class, which is a separate class within a class.
